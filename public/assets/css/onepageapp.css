@@ -1,0 +1,162 @@
+body {
+	padding-top: 43px;
+	padding-bottom: 40px;
+}
+div {
+	font-size:11pt;
+}
+.footer {
+	position:fixed;
+	z-index:10;
+	bottom:5px;
+	right:10px;
+}
+#menuSticky {
+	z-index: 5;
+	right: 7%;
+	padding: 7px;
+	padding-top: 12px;
+}
+#menuSticky ul {
+	list-style: none;
+	margin:0;
+}
+#menuSticky li {
+	position: relative;
+	background: none repeat scroll 0 0 #cccccc;
+	border:1px solid #aaaaaa;
+	border-radius: 15px 15px 15px 15px;
+	cursor: pointer;
+	height: 9px;
+	margin: 10px 10px 0px 0px;
+	width: 18px;
+	vertical-align:bottom;
+}
+#menuSticky li.active {
+	background-color: #ffffff;
+	background-image: -moz-linear-gradient(center top , #FFFFFF, #EEEEEE);
+	background-repeat: repeat-x;
+}
+#menuSticky li:hover {
+	background: none repeat scroll 0 0 #EEEEEE;
+}
+#menuSticky a {
+	outline: 0;
+	vertical-align:top;
+	margin: 0px 0px 0px 25px;
+	position: relative;
+	top:-5px;
+}
+#scrollTop {
+	z-index:5;
+	position: fixed;
+	bottom: 0px;
+	right: 8%;
+	background-color:#cccccc;
+	color:#ffffff;
+	border:1px solid #aaaaaa;
+	border-radius:9px 9px 0px 0px;
+	padding:5px;
+}
+#msgBox {
+	margin-top:4%;
+	position:fixed;
+	z-index:100;
+	opacity:.9;
+	display:none;
+}
+.h-div{
+	width:100;
+	text-align:center;
+	border-top:1px solid #d0d0d0;
+	height:1px;
+}
+.h-div-dashed{
+	border-top:1px dashed #cccccc;
+}
+.h-div-shadow{
+	opacity:.4;
+	height:45px;
+	background:transparent url('/images/shadow-divider.png') no-repeat center top;
+}
+.box-zag{
+	background:transparent url('/images/bg3.png') no-repeat center top;
+	background-size:cover;
+	padding:10px;
+}
+.box-round-outer {
+	background-color: #cdcdcd;
+	border-radius:10px;
+	border:10px solid #fff;
+	background-color: #fff;
+	box-shadow:0px 5px 10px 1px #dddddd;
+}
+.box-round-inner {
+	background-color: #efefef;
+	padding:10px;
+	box-shadow:inset 1px 1px 8px 13px #e6e6e6;  
+	border:1px solid #ccc;    
+	border-radius:10px;
+}
+
+/* bootstrap mods */
+html,body{height:100%;}
+section{min-height:100%;}
+.carousel,.item,.active{height:100%;}
+.fill{width:100%;height:100%;background-position:center;background-size:cover;}
+.pull-center{text-align:center;margin:0 auto !important;float:none !important;}
+.pull-middle{vertical-align:middle;margin-top:14% !important;}
+.input-huge{font-size:150%;padding:8px;}
+.tooltip-inner{max-width:;}
+.btn-huge{font-size:20px;padding:12px;}
+.carousel-inner{height:100%;}
+.carousel-control{top:49%;left:5px;width:50px;height:50px;margin-top:-20px;font-size:100px;font-weight:100;line-height:30px;color:#ffffff;text-align:center;background:transparent;border:0;}
+a:visited,a:link{outline:0;}
+.pull-left.thumbnail {margin-right:5px !important;}
+.pull-right.thumbnail {margin-left:5px !important;}
+.responsive-image {max-width:90%; max-height:85%;}
+.light-color , .light-color a {color:#f7f7f7;text-decoration:none}
+.dark-color, .dark-color a{color:#444444;text-decoration:none}
+.blocky h1, .blocky h2 {background-color:rgba(1,240,1,0.7);display:inline;text-transform:none;font-weight:800;color:white;line-height:52px;}
+.blocky h1 span, .blocky h2 span{padding:10px;}
+
+.affix-top {
+    top: 30%; 
+	right: 0;
+	position:absolute;
+	z-index:2;
+}
+.affix {
+    top: 60px;
+	right: 0;
+	z-index:2;
+}
+
+/* slated to be added to bootstrap 2.3 */
+.carousel-pills {
+    bottom: 20%;
+    display: block;
+    left: 0;
+    *position: absolute;
+	position: relative;
+    right: 10px;
+    text-align: center;
+}
+.carousel-pills span {
+    background: none repeat scroll 0 0 #222222;
+    border-radius: 15px 15px 15px 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+    cursor: pointer;
+    display: inline-block;
+    height: 12px;
+    margin: 0 5px;
+    width: 12px;
+}
+.carousel-pills span.active-pill {
+    background-color: #F8F8F8;
+    background-image: -moz-linear-gradient(center top , #FFFFFF, #EEEEEE);
+    background-repeat: repeat-x;
+}
+.carousel-pills span:hover {
+    background: none repeat scroll 0 0 #EEEEEE;
+}

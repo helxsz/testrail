@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign in &middot; Twitter Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+	  
+	  #mapcanvas{
+        height: 100%;
+    min-width: 100px;
+    float: left;
+    display: block;
+    position: absolute;
+    z-order: 1000;
+	  }
+
+    </style>
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
+    <![endif]
+
+   <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>   
+   <script src="http://documentcloud.github.com/underscore/underscore.js"></script>
+   <script src="http://documentcloud.github.com/backbone/backbone.js"></script>
+   <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
+   -->
+   
+   <script src="/jquery-1.8.1.min.js"></script>   
+   <script src="/underscore.js"></script>
+   <script src="/backbone.js"></script>
+   <script src="/jquery.tmpl.min.js"></script> 
+   <script src="/socket.io.js"></script>
+   <script src="/init.js"></script>
+   <script src="/train_socket.js"></script>   
+   <script src="/paper.js"></script>  
+   <script type="text/javascript" src="/backbone.localStorage-min.js"></script>   
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+
+
+
+    <script type="text/template" id="headerTemplate"> 
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email">
+              <input class="span2" type="password" placeholder="Password">
+              <button type="submit" class="btn">Sign in</button>
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+     </div>
+    </script>
+
+    <script type="text/template" id="loginTemplate"> 
+      <div class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <p class="error"></p>
+        <input type="text"  name="email" class="input-block-level" placeholder="Email address">
+        <input type="password"  name="password" class="input-block-level" placeholder="Password">
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>        
+        <input type="submit" id="submit" value="Login">
+      </div>
+    </script>
+
+    <script type="text/template" id="questionListTemplate">
+       <div class="row" id="<%=_id%>" style="background:#eee; margin: 0 auto 10px;">
+          <div class="span8"> <%=question%>  </div>
+          <div class="span8" style="background:#3A87AD"> <%=answer%>  </div>
+          <div class="span8"> 
+                   <a class="edit" href="#"><i class="icon-pencil"></i> Edit</a>
+                   <a class="delete" href="#"><i class="icon-trash"></i> Delete</a>
+          </div>
+       </div>
+    </script>
+    
+   <script  type="text/template" id="twitterWidget">
+    <ul class="tweets">
+       <% _.each(tweets, function (tweet) { %>
+       <li><%= tweet.get('text') %></li>  <% }); %>
+    </ul>   
+   </script>
+   
+    <div id="control">
+      <strong>Start:</strong>
+      <select id="start" onchange="calcRoute();">
+        <option value="chicago, il">Chicago</option>
+        <option value="st louis, mo">St Louis</option>
+        <option value="joplin, mo">Joplin, MO</option>
+        <option value="oklahoma city, ok">Oklahoma City</option>
+        <option value="amarillo, tx">Amarillo</option>
+        <option value="gallup, nm">Gallup, NM</option>
+        <option value="flagstaff, az">Flagstaff, AZ</option>
+        <option value="winona, az">Winona</option>
+        <option value="kingman, az">Kingman</option>
+        <option value="barstow, ca">Barstow</option>
+        <option value="san bernardino, ca">San Bernardino</option>
+        <option value="los angeles, ca">Los Angeles</option>
+      </select>
+      <strong>End:</strong>
+      <select id="end" onchange="calcRoute();">
+        <option value="chicago, il">Chicago</option>
+        <option value="st louis, mo">St Louis</option>
+        <option value="joplin, mo">Joplin, MO</option>
+        <option value="oklahoma city, ok">Oklahoma City</option>
+        <option value="amarillo, tx">Amarillo</option>
+        <option value="gallup, nm">Gallup, NM</option>
+        <option value="flagstaff, az">Flagstaff, AZ</option>
+        <option value="winona, az">Winona</option>
+        <option value="kingman, az">Kingman</option>
+        <option value="barstow, ca">Barstow</option>
+        <option value="san bernardino, ca">San Bernardino</option>
+        <option value="los angeles, ca">Los Angeles</option>
+      </select>
+    </div>
+    <div id="directions-panel"></div>   
+   
+   
+   <!--================================================== µØÍ¼scriptÄ£¿é=====================================================-->
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script><!--¹È¸èµØÍ¼-->
+<script type="text/template" id="searchmapTemplate">
+<div data-infinite_url="https://api.kickstarter.com/v1/projects/near?count=8&amp;cursor=2&amp;location_id=7189&amp;signature=1357724665.6b3ac45f7901810c485a5b2090c6adbf12a6dc8d" id="location-projects">
+	<div class="container">
+		<div class="title-card">
+			<h2 class="jiangxi cn">
+				<span class="map-icon"></span>
+					<a href="/discover/cities/ji'an-chn?ref=home_location" class="location-name">Ji'An, China</a>
+				<span class="not-here">Change city</span>
+			</h2>
+			<div id="set-location">
+				<form accept-charset="UTF-8" action="/locations?has_live_projects=true" class="overlabels" method="post">
+					<div style="margin:0;padding:0;display:inline">
+						<input class="hidden" name="utf8" type="hidden" value="?">
+						<input class="hidden" name="authenticity_token" type="hidden" value="glQ6P6KS2WaZiEQ5FY+BOs9bfrxcNfgbGXg4MS/FX2o=">
+					</div>
+					<div class="field search">
+						<span class="icon-search"></span>
+						<span class="icon-search-clear" style="display: none;"></span>
+						<label class="overlabel overlabel-search overlabel-apply">Search cities</label>
+						<input autocomplete="off" class="input-search input-text text" data-tracker-name="Location Live Search" id="searchtext" name="q" type="text" >
+						<div class="results">
+							<span class="icon-dropdown-pointer"></span>
+							<ul class="result_list"></ul>
+							<div class="no_results" style="display: none;">Sorry, we couldn't find anything.</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="slider">
+			<p class="no-projects">
+				Sorry we couldn't find any projects in your area! Try browsing some projects
+				<a href="/discover?ref=home_location">here.</a>
+			</p>
+		</div>
+
+			<div id="mapcontainer" class="mapcontainer" style="width: 100%;height: 100%;-webkit-transition: bottom .5s;-webkit-transition-timing-function: ease-in;">
+			</div>	
+	<!--    ==============================================================     -->
+	</div>
+</div>
+</script>
+   
+   
+   
+   
+
+
+   <!-- templates/example/login.html 
+   <script type="text/template" id="loginWidget">
+     <form class="login">
+       <label for="">Username</label>
+       <input name="username" type="text" required autofocus>
+       <input type="submit" id="submit" value="Login">
+     </form>
+   </script>
+   -->
+   
+   <!-- templates/example/logout.html -->
+   <script type="text/template" id="logoutWidget">
+      <p>Hello, <%= username %>. Time to logout?</p>
+      <button class="logout">Logout</button>
+   </script>    
+    
+    
+  <body>
+
+    <div class="container">
+
+
+    
+
+   
+<script type="text/template" id="questionFormTemplate">   
+<div class="row-fluid">
+    <form class="form-horizontal span12">
+        <fieldset>
+            <legend>Wine Details</legend>
+            <br/>
+            <div class="row">
+                <div class="span8">
+                    <div class="control-group">
+                        <label for="wineId" class="control-label">Id:</label>
+                        <div class="controls">
+                            <input id="id" name="id" type="text" "
+                                   disabled/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="question" class="control-label">Question:</label>
+                        <div class="controls">
+                            <textarea id="question" name="question" style="width: 90%;" rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="answer" class="control-label">Answer:</label>
+                        <div class="controls">
+                            <input type="text" id="answer" name="answer" />
+                            <span class="help-inline"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="level" class="control-label">level:</label>
+                        <div class="controls">
+                            <select class="input-small" id="level" name="level" >
+                                <option>
+                                3</option>
+                                <option>
+                                2</option>
+                                <option>
+                                1</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4 pictureContainer">
+                    <div class="well" style="width: 180px;text-align: center;width:50%;margin: 0px auto;">
+                        <p><img id="picture" width="180" /></p>
+                        <p style="color:#999;">To change the picture, drag a new picture from your file system onto the box above.</p>
+                    </div>
+                </div>
+   </script>
+   
+    <script id="panel" type="text/html">
+       <div id="panel" class="visible open">
+          <div class="mtam-title">
+            <a href="#" id="minimize"></a>
+            <div id="panel-title">Base Maps</div>
+          </div>
+          <div id="panel-body"><div class="banner basemaps-banner"><div class="g-plusbtn"><div style="height: 15px; width: 24px; display: inline-block; text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; background-position: initial initial; background-repeat: initial initial;" id="___plusone_6"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 24px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 15px;" tabindex="0" vspace="0" width="100%" id="I5_1361981129792" name="I5_1361981129792" src="https://plusone.google.com/_/+1/fastbutton?bsv&amp;size=small&amp;annotation=none&amp;hl=en-US&amp;origin=http%3A%2F%2Fwww.morethanamap.com&amp;url=http%3A%2F%2Fwww.morethanamap.com%2Fdemos%2Fbasemaps&amp;gsrc=3p&amp;ic=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en_GB.obMQ7QzGZnU.O%2Fm%3D__features__%2Fam%3DqQ%2Frt%3Dj%2Fd%3D1%2Frs%3DAItRSTMPQvqGRUDNuh2UbYvlbW4iZq5m7w#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled&amp;id=I5_1361981129792&amp;parent=http%3A%2F%2Fwww.morethanamap.com&amp;rpctoken=23900672" allowtransparency="true" data-gapiattached="true" title="+1"></iframe></div></div></div><div class="section section-text"><p>
+        For the last decade, we've obsessed over building great maps¡ªmaps
+        that are comprehensive, accurate, and easy to use.
+       </p></div><div class="section"><div class="tabs"><a href="#" class="">Base Maps</a><a href="#" class="active">Styled Maps</a></div></div><div class=""><div><h2>Go Further</h2><ul style="display: none;"><li><a href="/demos/basemaps/new-york" class="">New York</a></li><li><a href="/demos/basemaps/hong-kong">Hong Kong</a></li><li><a href="/demos/basemaps/search" class="">Search</a></li></ul><ul style=""><li><a href="/demos/basemaps/sydney" class="active">Sydney</a></li><li><a href="/demos/basemaps/tokyo">Tokyo</a></li><li><a href="/demos/basemaps/san-francisco">San Francisco</a></li></ul></div></div></div>
+      </div>
+    </script>
+   
+
+
+   <script src="/question full.js"></script>
+   <script src="/socket.io.js"></script>
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+     http://twitter.github.com/bootstrap
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster 
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+-->
+
+   <script id="otherTemplate" type="text/html">
+<div class="btn-group">
+  <a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i> User</a>
+  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+    <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
+    <li class="divider"></li>
+    <li><a href="#"><i class="i"></i> Make admin</a></li>
+  </ul>
+</div>
+
+
+<div class="btn-toolbar">
+  <div class="btn-group">
+ 
+    <a class="btn" href="#"><i class="icon-align-left"></i></a>
+    <a class="btn" href="#"><i class="icon-align-center"></i></a>
+    <a class="btn" href="#"><i class="icon-align-right"></i></a>
+    <a class="btn" href="#"><i class="icon-align-justify"></i></a>
+  </div>
+</div>
+
+
+<div class="input-prepend">
+  <span class="add-on">@</span>
+  <input class="span2" id="prependedInput" type="text" placeholder="Username">
+</div>
+
+
+<div class="input-append">
+  <input class="span2" id="appendedInput" type="text">
+  <span class="add-on">.00</span>
+</div>
+
+<select>
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
+
+
+<div class="form-actions">
+  <button type="submit" class="btn btn-primary">Save changes</button>
+  <button type="button" class="btn">Cancel</button>
+</div>
+
+
+<div class="control-group">
+  <label class="control-label" for="inputIcon">Email address</label>
+  <div class="controls">
+    <div class="input-prepend">
+      <span class="add-on"><i class="icon-envelope"></i></span>
+      <input class="span2" id="inputIcon" type="text">
+    </div>
+  </div>
+</div>
+
+<p>
+  <button class="btn btn-large btn-primary" type="button">Large button</button>
+  <button class="btn btn-large" type="button">Large button</button>
+</p>
+<p>
+  <button class="btn btn-primary" type="button">Default button</button>
+  <button class="btn" type="button">Default button</button>
+</p>
+<p>
+  <button class="btn btn-small btn-primary" type="button">Small button</button>
+  <button class="btn btn-small" type="button">Small button</button>
+</p>
+
+<input class="input-xlarge" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
+
+<input class="span3" type="email" required>
+
+</script>
+  </body>
+</html>

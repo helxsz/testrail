@@ -1,0 +1,54 @@
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Google Maps JavaScript API Example - simple</title>
+    <style type="text/css">
+       div.markerTooltip, div.markerDetail {
+          color: black;
+          font-weight: bold;
+          background-color: white;
+          white-space: nowrap;
+          margin: 0;
+          padding: 2px 4px;
+          border: 1px solid black;
+       }
+    </style>
+<script src="http://maps.google.com/maps?file=api&v=2.x"
+           type="text/javascript"></script>
+<script type="text/javascript" src="http://www.pixeldevelopment.com/pdmarker.js"></script>
+<!--  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>  -->
+
+<script type="text/javascript">
+//<![CDATA[
+window.onload = onPageLoad;
+var map;
+
+function onPageLoad() {
+    if (GBrowserIsCompatible()) {
+	map = new GMap2(document.getElementById("map"));
+	map.setCenter(new GLatLng(49.28124, -123.12035), 17-5);
+	map.addControl(new GLargeMapControl());
+	map.addControl(new GMapTypeControl());
+	marker = new PdMarker(new GLatLng(49.28124,-123.12035));
+	marker.setTooltip("Vancouver");
+	var html = "Visit <a href='http://www.yourvancouver.com'>Vancouver<\/a>";
+	marker.setDetailWinHTML(html);
+	marker.setHoverImage("http://www.google.com/mapfiles/dd-start.png");
+	map.addOverlay(marker);
+
+    }
+}
+//]]>
+</script>
+
+  </head>
+
+  <body>
+    <div id="map" style="width: 400px; height: 400px"></div>
+    <!-- // define a place for PdMarker to calculate tooltip widths (optional) -->
+    <div id="pdmarkerwork"></div>
+  </body>
+
+</html>
